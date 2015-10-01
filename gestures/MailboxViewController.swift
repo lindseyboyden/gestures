@@ -12,17 +12,13 @@ class MailboxViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        scrollView.contentSize = imageView.image!.size
         
         
        
     }
-
-    override func didReceiveMemoryWarning() {
+        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
