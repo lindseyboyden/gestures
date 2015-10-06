@@ -55,11 +55,13 @@ class MailboxViewController: UIViewController {
         rescheduleImage.alpha = 0
         
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [], animations: { () -> Void in
-            self.scrollView.center.y = self.scrollView.center.y - 76
+            //self.scrollView.center.y = self.scrollView.center.y - 76
+            //self.containerView.alpha = 0
             }) { (completed) -> Void in
                 
                 UIView.animateWithDuration(0.5, delay: 1, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [], animations: { () -> Void in
-                    self.scrollView.center.y = self.scrollView.center.y + 76
+                    //self.scrollView.center.y = self.scrollView.center.y + 76
+                    //self.containerView.alpha = 1
                     }, completion: { (completed) -> Void in
                         //finished
                 })
@@ -106,7 +108,7 @@ class MailboxViewController: UIViewController {
                 archiveIcon.alpha = 0
                 deleteIcon.alpha = 1
                 deleteIcon.center.x = deletePosition + translation.x - 260
-                
+                listIcon.alpha = 0
                 
                 
                 print("passed 260")
@@ -117,6 +119,7 @@ class MailboxViewController: UIViewController {
                 archiveIcon.center.x = archivePosition + translation.x - 60
                 deleteIcon.alpha = 0
                 deleteIcon.center.x = deletePosition
+                listIcon.alpha = 0
             }
             else {
                 containerView.backgroundColor =  UIColor.lightGrayColor()
@@ -149,11 +152,54 @@ class MailboxViewController: UIViewController {
         } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
             print("Gesture ended at: \(point)")
             
-            if translation.x < -260 {
+            if translation.x > 260 {
+                
+                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+                    self.scrollView.center.y = self.scrollView.center.y - 56
+                    self.containerView.alpha = 0
+                    }) { (completed) -> Void in
+                        
+                        UIView.animateWithDuration(0.5, delay: 1, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+                            self.scrollView.center.y = self.scrollView.center.y + 56
+                            self.containerView.alpha = 1
+                            }, completion: { (completed) -> Void in
+                                //finished
+                        })
+
+                }
+            }
+                
+            else if translation.x > 60  {
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+                    self.messageImage.center.x = 1220
+                    //self.scrollView.center.y = self.scrollView.center.y - 56
+                    
+                    
+                    }, completion: { (completed) -> Void in
+                        UIView.animateWithDuration(0.5, delay: 0.5, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+                            self.scrollView.center.y = self.scrollView.center.y - 56
+                            self.containerView.alpha = 0
+                            }, completion: { (completed) -> Void in
+                                UIView.animateWithDuration(0.3, delay: 1, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+                                    self.containerView.alpha = 1
+                                    self.scrollView.center.y = self.scrollView.center.y + 56
+                                    self.messageImage.center.x = self.originalPosition
+                                    }, completion: { (completed) -> Void in
+                                        //finished
+                                })
+                        })
+                        
+                })
+                
+                
+            }
+                
+
+            else if translation.x < -260 {
                 rescheduleImage.alpha = 1
             }
             
-            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+            UIView.animateWithDuration(0.3, delay: 0.5, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: { () -> Void in
                 self.messageImage.center.x = self.originalPosition
                 }, completion: { (completed) -> Void in
                     //finished
