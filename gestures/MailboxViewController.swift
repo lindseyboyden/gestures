@@ -30,6 +30,18 @@ class MailboxViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        originalPosition = messageImage.center.x
+        archiveIcon.alpha = 0.2
+        archivePosition = archiveIcon.center.x
+        deleteIcon.alpha = 0
+        deletePosition = deleteIcon.center.x
+        laterIcon.alpha = 0.2
+        laterPosition = laterIcon.center.x
+        listIcon.alpha = 0
+        listPosition = listIcon.center.x
+        scrollViewPosition = scrollView.center.y
+        
         scrollView.contentSize = imageView.image!.size
         rescheduleImage.alpha = 0
     }
@@ -43,9 +55,14 @@ class MailboxViewController: UIViewController {
         rescheduleImage.alpha = 0
         
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [], animations: { () -> Void in
-            self.scrollViewPosition.center.y = self.scrollViewPosition + 50
+            self.scrollView.center.y = self.scrollView.center.y - 76
             }) { (completed) -> Void in
-                //fisnished
+                
+                UIView.animateWithDuration(0.5, delay: 1, usingSpringWithDamping: 0.3, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+                    self.scrollView.center.y = self.scrollView.center.y + 76
+                    }, completion: { (completed) -> Void in
+                        //finished
+                })
         }
         
         
@@ -61,6 +78,7 @@ class MailboxViewController: UIViewController {
         if panGestureRecognizer.state == UIGestureRecognizerState.Began {
             print("Gesture began at: \(point)")
             
+           /*
             originalPosition = messageImage.center.x
             archiveIcon.alpha = 0.2
             archivePosition = archiveIcon.center.x
@@ -71,6 +89,8 @@ class MailboxViewController: UIViewController {
             listIcon.alpha = 0
             listPosition = listIcon.center.x
             scrollViewPosition = scrollView.center.y
+            
+            */
             
            
             
@@ -115,7 +135,7 @@ class MailboxViewController: UIViewController {
                 listIcon.alpha = 1
                 listIcon.center.x = listPosition + translation.x  + 260
                 
-                rescheduleImage.alpha = 1
+                
                 
             }
             else if translation.x < -60 {
@@ -129,7 +149,9 @@ class MailboxViewController: UIViewController {
         } else if panGestureRecognizer.state == UIGestureRecognizerState.Ended {
             print("Gesture ended at: \(point)")
             
-           
+            if translation.x < -260 {
+                rescheduleImage.alpha = 1
+            }
             
             UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: { () -> Void in
                 self.messageImage.center.x = self.originalPosition
